@@ -133,29 +133,29 @@ def clusterparts(parts, block_len, opt):
 
  return clusters
 
-def marksimilar(image, clust, size, opt):
- blocks = []
- if clust:
-  draw = ImageDraw.Draw(image)
-  mask = Image.new('RGB', (size,size), 'cyan')
-  for cl in clust:
-   for x,y in cl:
-   	im = image.crop((x,y,x+size,y+size))
-   	im = Image.blend(im,mask,0.5)
-   	blocks.append((x,y,im))
-  for bl in blocks:
-  	x,y,im = bl
-  	image.paste(im,(x,y,x+size,y+size))
-  if int(opt.imauto):
-   for cl in clust:
-    cx1 = min([cx for cx,cy in cl])
-    cy1 = min([cy for cx,cy in cl])
-    cx2 = max([cx for cx,cy in cl]) + block_len
-    cy2 = max([cy for cx,cy in cl]) + block_len
-    draw.rectangle([cx1,cy1,cx2,cy2],outline="magenta")
- return image
-
-def detect(input, opt, args):
+def marksimilar(image, clust, block_len, opt):  # Add 'block_len' as a parameter here
+    blocks = []
+    if clust:
+        draw = ImageDraw.Draw(image)
+        mask = Image.new('RGB', (block_len, block_len), 'cyan')
+        for cl in clust:
+            for x, y in cl:
+                im = image.crop((x, y, x + block_len, y + block_len))
+                im = Image.blend(im, mask, 0.5)
+                blocks.append((x, y, im))
+        for bl in blocks:
+            x, y, im = bl
+            image.paste(im, (x, y, x + block_len, y + block_len))
+        if int(opt.imauto):
+            for cl in clust:
+                cx1 = min([cx for cx, cy in cl])
+                cy1 = min([cy for cx, cy in cl])
+                cx2 = max([cx for cx, cy in cl]) + block_len
+                cy2 = max([cy for cx, cy in cl]) + block_len
+                draw.rectangle([cx1, cy1, cx2, cy2], outline="magenta")
+    return image
+    
+def detect(input, opt, args,block_len):
     block_len = 15
     im = Image.open(input)
     lparts = getparts(im, block_len, opt)

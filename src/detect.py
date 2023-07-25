@@ -31,9 +31,12 @@ if __name__ == '__main__':
     if(double_compressed): print('\nDouble compression detected')
     else: print('\nSingle compressed')
 
+    # Define block_len as a constant value (adjust as needed)
+    block_len = 15
+
     print('\nRunning CFA artifact detection...\n')
-    identical_regions_cfa = copy_move_cfa.detect('..//images//' + im_str, opt, args)
-    print('\n' + identical_regions_cfa, 'CFA artifacts detected')
+    identical_regions_cfa = copy_move_cfa.detect('..//images//' + im_str, opt, args, block_len)
+    print('\n' + str(identical_regions_cfa), 'CFA artifacts detected')
 
     print('\nRunning noise variance inconsistency detection...')
     noise_forgery = noise_variance.detect('..//images//' + im_str)
