@@ -6,6 +6,14 @@ The forgery detection tool contained in this repository currently features foren
 - CFA artifacts
 - Noise variance inconsitencies
 
+To download the dependecies:
+
+sudo apt-get update
+sudo apt-get install libgl1-mesa-glx
+pip install opencv-python
+pip install tqdm
+pip install Pillow
+
 Please read our paper for a detailed explanation of our motivation and research when developing this tool.
 
 ## To Run:
